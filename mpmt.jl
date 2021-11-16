@@ -28,7 +28,7 @@ for i in workers()
     #@info "worker id: $(id), process id: $(pid), host: $(host)"
 end
 =#
-
-@parallel for i = 1:200
+@sync @distributed for i = 1:200
     myfun(i)
 end
+
