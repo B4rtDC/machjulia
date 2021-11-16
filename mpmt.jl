@@ -12,7 +12,7 @@ addprocs(SlurmManager(num_workers), cpus_per_task="$(num_threads)")
 @everywhere begin
     function myfun(i)
         println("iteration $(i) on worker $(myid()) on host $(gethostname())")
-        sleep(1)
+        #sleep(1)
     end
 end
 
@@ -28,7 +28,10 @@ for i in workers()
     #@info "worker id: $(id), process id: $(pid), host: $(host)"
 end
 =#
-@sync @distributed for i = 1:200
-    myfun(i)
-end
+#
+#@sync @distributed for i = 1:200
+#    myfun(i)
+#end
+
+pmap(i->myfun(i), 1:200)
 
