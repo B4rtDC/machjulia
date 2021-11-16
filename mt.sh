@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash -l
 #
-#SBATCH -p 80CORE 
-#SBATCH -N 1 
-#SBATCH -n 20
+#SBATCH --partition 80CORE 
+#SBATCH --nodes 1 
+#SBATCH --ntasks 4
 
 : '
 Using simple multithreading on a single blade
@@ -13,6 +13,8 @@ Note that the different settings for SLURM are added in the initial lines:
 
 '
 
+echo "Starting job!!! ${SLURM_JOB_ID}"
+
 # Config 
 julia_path="$HOME" # where to place julia
 script_path="$HOME/machjulia"
@@ -20,5 +22,9 @@ original_path="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pw
 
 echo "julia path: $jula_path"
 echo "original path: $original_path"
+
+# print out environment variables related to SLURM_NTASKS
+julia -e 'println("\n"); [println((k,ENV[k],)) for k in keys(ENV) if occursin("SLURM_NTASKS",k)]; println("\n");'
+
 # Run script
-$julia_path/julia-1.6.3/bin/julia --threads auto $script_path/mt.jl
+#$julia_path/julia-1.6.3/bin/julia --threads auto $script_path/mt.jl
