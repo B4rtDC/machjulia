@@ -6,9 +6,9 @@ mylogger = Logging.SimpleLogger(io)
 
 # Actual code
 with_logger(mylogger) do
-    @info "Available threads: $(Threads.nthreads())"
+    @info "Multithreading demo:\n → Available threads: $(Threads.nthreads())"
     Threads.@threads for i in 1:20
-        @info "iteration $(i) on thread $(Threads.threadid())" 
+        @info "\n\titeration $(i) on thread $(Threads.threadid())\n" 
     end
 end
 
