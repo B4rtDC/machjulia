@@ -13,7 +13,17 @@ addprocs(SlurmManager(num_workers), cpus_per_task="$(num_threads)")
     function myfun(i)
         println("iteration $(i) on worker $(myid()) on host $(gethostname())")
         #sleep(1)
+        return i
     end
+
+    function print_id_2(x)
+        pid = Distributed.myid()
+        nth = Threads.nthreads()
+        Threads.@threads for i in 1:nth
+          tid = Threads.threadid()
+          println("Hello from thread $tid of $nth on worker $pid. $(x[tid]) is from a vector")
+        end
+    end  
 end
 
 println("Number of cores: ", nprocs())
@@ -33,5 +43,8 @@ end
 #    myfun(i)
 #end
 
-pmap(i->myfun(i), 1:200)
+#res = pmap(i->myfun(i), 1:200)
+#workers()
+#println(res)
+pmap(print_id_2, xv)
 
