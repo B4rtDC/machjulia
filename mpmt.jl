@@ -43,8 +43,8 @@ end
 #    myfun(i)
 #end
 
-#res = pmap(i->myfun(i), 1:200)
-#workers()
-#println(res)
+# do work
 pmap(print_id_2, collect(1:200))
 
+# remove workers after work
+rmprocs(workers())
