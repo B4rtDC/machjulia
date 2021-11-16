@@ -14,5 +14,7 @@ echo "Downloading in <$download_path>"
 #mv "$download_path/julia-1.6.3" "$julia_path"
 
 # run julia and install required packages
-"$julia_path/julia-1.6.3/bin/julia $original_path/config.jl"
+echo "planned line: $julia_path/julia-1.6.3/bin/julia $original_path/config.jl"
 
+$julia_path/julia-1.6.3/bin/julia $original_path/config.jl
+# 
