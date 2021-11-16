@@ -7,7 +7,7 @@ num_threads = parse(Int, ENV["SLURM_CPUS_PER_TASK"])
 
 # create workers
 #addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
-addprocs(SlurmManager(num_workers), cpus_per_task="$(num_threads)")
+addprocs(SlurmManager(num_workers))#, cpus_per_task="$(num_threads)")
 
 @everywhere begin
     function myfun(i)
@@ -24,6 +24,10 @@ addprocs(SlurmManager(num_workers), cpus_per_task="$(num_threads)")
           println("Hello from thread $tid of $nth on worker $pid. $(x[tid]) is from a vector")
         end
     end  
+
+    function wiener(x)
+        return x^2
+    end
 end
 
 println("Number of cores: ", nprocs())
@@ -44,7 +48,8 @@ end
 #end
 
 # do work
-pmap(print_id_2, collect(1:200))
-
+#pmap(print_id_2, collect(1:200))
+pmap(wiener, collect(1:200))
 # remove workers after work
+println("done working!")
 rmprocs(workers())
