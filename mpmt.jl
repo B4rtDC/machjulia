@@ -29,6 +29,6 @@ for i in workers()
 end
 =#
 
-@parallel for i = 1:400
+@parallel for i = 1:200
     myfun(i)
 end
