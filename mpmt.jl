@@ -6,12 +6,13 @@ num_threads = parse(Int, ENV["SLURM_CPUS_PER_TASK"])
 
 
 # create workers
-addprocs(SlurmManager(num_workers), env=["JULIA_NUM_THREADS"=>num_threads])
+#addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
+addprocs(SlurmManager(num_workers), env=["JULIA_NUM_THREADS"=>"$(num_threads)"])
 
 @everywhere begin
     function myfun(i)
         println("iteration $(i) on worker $(myid()) on host $(gethostname())")
-        sleep(10)
+        sleep(1)
     end
 end
 
