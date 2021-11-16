@@ -30,4 +30,4 @@ julia -e 'println("\n"); println("I have $(Threads.nthreads()) thread(s) availab
 julia --threads auto -e 'println("\n"); println("I have $(Threads.nthreads()) thread(s) available"); println("\n");'
 julia -e 'println("\n"); [println((k,ENV[k],)) for k in keys(ENV) if occursin("SLURM",k)]; println("\n");'
 # Run script
-#$julia_path/julia-1.6.3/bin/julia --threads auto $script_path/mt.jl
+$julia_path/julia-1.6.3/bin/julia --threads $SLURM_CPUS_PER_TASK $script_path/mt.jl
