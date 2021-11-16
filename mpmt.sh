@@ -2,7 +2,7 @@
 #
 #SBATCH --partition 80CORE 
 #SBATCH --nodes 2 # two nodes
-#SBATCH --ntasks 4 # 4 process in total(worker)
+#SBATCH --ntasks 120 # 4 process in total(worker)
 #SBATCH --cpus-per-task 5 # 5 threads per task => 40 in total
 
 : '
