@@ -1,3 +1,5 @@
+using Logging
+
 # Logging setup
 io = open("multithreading_log.txt", "w+")
 mylogger = Logging.SimpleLogger(io)
