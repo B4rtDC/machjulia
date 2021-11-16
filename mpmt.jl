@@ -46,5 +46,5 @@ end
 #res = pmap(i->myfun(i), 1:200)
 #workers()
 #println(res)
-pmap(print_id_2, xv)
+pmap(print_id_2, collect(1:200))
 
