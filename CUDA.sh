@@ -1,4 +1,6 @@
-# run as on cluster as follows=
+#!/bin/sh
+
+# run as on cluster as follows:
 # sbatch -p GPU path/to/CUDA.sh
 
 # Config 
