@@ -7,7 +7,7 @@ num_threads = parse(Int, ENV["SLURM_CPUS_PER_TASK"])
 
 # create workers
 #addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
-addprocs(SlurmManager(num_workers), cpus-per-task="$(num_threads)")
+addprocs(SlurmManager(num_workers), :cpus-per-task="$(num_threads)")
 
 @everywhere begin
     function myfun(i)
