@@ -2,7 +2,7 @@ using Distributed
 using Logging
 
 # Logging setup
-io = open("mpmt_log.txt", "w+")
+io = open("mpmt_log.txt", "a+")
 
 
 # read settings
@@ -13,7 +13,10 @@ num_threads = parse(Int, ENV["SLURM_CPUS_PER_TASK"])
 # create workers
 addprocs(num_workers)#, :env=["JULIA_NUM_THREADS"=>num_threads])
 
-@everywhere mylogger = Logging.SimpleLogger(io)
+@everywhere begin
+    using Logging
+    mylogger = Logging.SimpleLogger(io)
+end
 
 with_logger(mylogger) do
     println("Number of cores: ", nprocs())
