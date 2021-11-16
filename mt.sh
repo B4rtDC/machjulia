@@ -1,8 +1,9 @@
 #!/bin/bash -l
 #
 #SBATCH --partition 80CORE 
-#SBATCH --nodes 1 
-#SBATCH --ntasks 4
+#SBATCH --nodes 1 # single node
+#SBATCH --ntasks=1 # single process (worker)
+#SBATCH --cpus-per-task=17 # 17 threads
 
 : '
 Using simple multithreading on a single blade
@@ -26,5 +27,6 @@ echo "original path: $original_path"
 # print out environment variables related to SLURM_NTASKS
 julia -e 'println("\n"); [println((k,ENV[k],)) for k in keys(ENV) if occursin("SLURM_NTASKS",k)]; println("\n");'
 julia -e 'println("\n"); println("I have $(Threads.nthreads()) thread(s) available"); println("\n");'
+julia --threads auto -e 'println("\n"); println("I have $(Threads.nthreads()) thread(s) available"); println("\n");'
 # Run script
 #$julia_path/julia-1.6.3/bin/julia --threads auto $script_path/mt.jl
