@@ -6,7 +6,9 @@ for pkg in ["Plots",
             "Distributed", 
             "SlurmClusterManager",
             "ClusterManagers",
-            "CUDA"]
+            "CUDA",
+            "BenchmarkTools",
+            "Pluto"]
     Pkg.add(pkg)
 end
 
