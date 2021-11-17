@@ -10,6 +10,7 @@ using Distributed, CUDA
 println(device())
 println([CUDA.capability(dev) for dev in CUDA.devices()])
 
+#=
 # single proces, using all four GPUs
 @sync begin
     @async begin
@@ -28,5 +29,19 @@ println([CUDA.capability(dev) for dev in CUDA.devices()])
         #b = CuArray{Float32}(undef, 10)
         #rand!(b)
         #println(typeof(b)," ", b)
+    end
+end
+=#
+
+# spawn one worker per device
+using Distributed, CUDA
+addprocs(length(devices()))
+@everywhere using CUDA
+
+# assign devices
+asyncmap((zip(workers(), devices()))) do (p, d)
+    remotecall_wait(p) do
+        @info "Worker $p uses $d"
+        device!(d)
     end
 end
