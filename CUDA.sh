@@ -5,8 +5,6 @@
 #SBATCH --cpus-per-task=1        # cpu-cores per task (>1 if multi-threaded tasks)
 #SBATCH --partition=GPU          # partition to use
 
-
-
 echo $CUDA_VISIBLE_DEVICES
 
 # Config 
