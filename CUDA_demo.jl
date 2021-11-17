@@ -12,7 +12,7 @@ using Random
 function foo(n::Int=100)
     a = CuArray{Float32}(undef, n)
     rand!(a)
-    return a
+    return
 end
 
 @sync begin
