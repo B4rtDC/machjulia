@@ -1,8 +1,8 @@
 using CUDA, Logging
 
 # Logging setup
-io = open("CUDA_log.txt", "w+")
-mylogger = Logging.SimpleLogger(io)
+#io = open("CUDA_log.txt", "w+")
+#mylogger = Logging.SimpleLogger(io)
 
 #=
 # Actual code
@@ -16,5 +16,5 @@ end
 println([CUDA.capability(dev) for dev in CUDA.devices()])
 
 # Cleanup
-flush(io)
-close(io)
+#flush(io)
+#close(io)
