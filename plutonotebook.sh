@@ -16,10 +16,10 @@ port=3300 # port for notebook server
 
 
 # control to start notebook
-echo "$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false)'"
-
+cmd =  "$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false)'"
+echo $cmd
 # start the notebook on local machine
-$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false)'
+eval $cmd
 
 : '
 source: http://www.utkuevci.com/notes/port-forwarding/
