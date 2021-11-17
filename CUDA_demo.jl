@@ -20,7 +20,7 @@ end
         device!(0)
         # do work on GPU 0 here
         println("running on device $(device())")
-        res = foo()
+        res = @cuda foo()
         println(typeof(res)," ", res)
     end
     @async begin
