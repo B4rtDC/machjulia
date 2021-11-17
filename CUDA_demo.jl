@@ -12,7 +12,7 @@ using Distributed, CUDA
 addprocs(1)
 @everywhere using CUDA
 worker = workers()[1]
-device = devices()[1]
+device = collect(devices())[1]
 
 # run task on single device
 remotecall_wait(device) do
