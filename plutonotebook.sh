@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1               # total number of tasks across all nodes
 #SBATCH --cpus-per-task=1        # cpu-cores per task (>1 if multi-threaded tasks)
-#SBATCH --partition=80core          # use GPU partition to use
+#SBATCH --partition=80CORE          # use GPU partition to use
 
 # Config 
 julia_path="$HOME" # where to place julia
