@@ -16,7 +16,7 @@ port=3300 # port for notebook server
 
 
 # control to start notebook
-command="$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false)'"
+command="$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false, require_secret_for_access=false)'"
 echo $command
 # start the notebook on local machine
 eval " $command"
