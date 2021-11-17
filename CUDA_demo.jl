@@ -10,25 +10,23 @@ using Distributed, CUDA
 using Random
 
 
-
+# single proces, using all four GPUs
 @sync begin
     @async begin
         device!(0)
         # do work on GPU 0 here
         println("running on device $(device())")
 
-        function foo(n::Int=100)
-            a = CuArray{Float32}(undef, n)
-            rand!(a)
-            return a
-        end
-
-        res = foo()
-        println(typeof(res)," ", res)
+        a = CuArray{Float32}(undef, 100)
+        rand!(a)
+        println(typeof(a)," ", a)
     end
     @async begin
         device!(1)
         # do work on GPU 1 here
+        b = CuArray{Float32}(undef, 10)
+        rand!(b)
+        println(typeof(b)," ", b)
     end
 end
 
