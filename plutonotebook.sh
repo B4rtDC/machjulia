@@ -9,22 +9,24 @@
 # Config 
 julia_path="$HOME" # where to place julia
 script_path="$HOME/machjulia"
-
 port=3300 # port for notebook server
 
 # forward port from actual notebook server machine to login server
 # This does not work for the DGX cluster :-( => why?
 # gives following error: Host key verification failed.
 /usr/bin/ssh -N -f -R $port:localhost:$port mach.intra.rma.ac.be
-
+# then on the intermediate machine:
+# ssh -L 3300:localhost:3300 -N user@mach.intra.rma.ac.be
+# and the nested one:
+# ssh -L 3300:localhost:3300 -N user@intermediate machine 
 
 # control to start notebook
-command="$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false, require_secret_for_access=false)'"
+command="$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false, require_secret_for_access=false, threads=$SLURM_CPUS_PER_TASK)'"
 echo $command
 # start the notebook on local machine
 eval " $command"
 
 : '
-source: http://www.utkuevci.com/notes/port-forwarding/
+inspiration/source: http://www.utkuevci.com/notes/port-forwarding/
 
 '
