@@ -14,8 +14,12 @@ port=3300 # port for notebook server
 # forward port from actual notebook server machine to login server
 /usr/bin/ssh -N -f -R $port:localhost:$port mach.intra.rma.ac.be
 
-# start the notebook
+
+# control to start notebook
 echo "$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false)'"
+
+# start the notebook on local machine
+$julia_path/julia-1.6.3/bin/julia -e 'using Pluto; Pluto.run(port=$port, launch_browser=false)'
 
 : '
 source: http://www.utkuevci.com/notes/port-forwarding/
