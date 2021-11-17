@@ -7,7 +7,6 @@ When trying to do work on only one GPU, the example below appears to work
 =#
 
 using Distributed, CUDA
-using Random
 
 
 # single proces, using all four GPUs
@@ -17,16 +16,17 @@ using Random
         # do work on GPU 0 here
         println("running on device $(device())")
 
-        a = CuArray{Float32}(undef, 100)
-        rand!(a)
-        println(typeof(a)," ", a)
+        #a = CuArray{Float32}(undef, 100)
+        #rand!(a)
+        #println(typeof(a)," ", a)
     end
     @async begin
         device!(1)
         # do work on GPU 1 here
-        b = CuArray{Float32}(undef, 10)
-        rand!(b)
-        println(typeof(b)," ", b)
+        println("running on device $(device())")
+        #b = CuArray{Float32}(undef, 10)
+        #rand!(b)
+        #println(typeof(b)," ", b)
     end
 end
 
