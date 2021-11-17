@@ -7,7 +7,29 @@ When trying to do work on only one GPU, the example below appears to work
 =#
 
 using Distributed, CUDA
+using Random
 
+function foo(n::Int=100)
+    a = CuArray{Float32}(undef, n)
+    rand!(a)
+    return a
+end
+
+@sync begin
+    @async begin
+        device!(0)
+        # do work on GPU 0 here
+        println("running on device $(device())")
+        res = foo()
+        println(typeof(res)," ", res)
+    end
+    @async begin
+        device!(1)
+        # do work on GPU 1 here
+    end
+end
+
+#=
 # add single worker process
 addprocs(1)
 @everywhere using CUDA
@@ -19,6 +41,7 @@ remotecall_wait(device) do
     device!(device)
     println("worker $(worker) uses device $(device)")
 end
+=#
 
 # assign devices
 # asyncmap((zip(workers(), devices()))) do (p, d)
