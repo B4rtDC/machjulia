@@ -12,7 +12,7 @@ with_logger(mylogger) do
 end
 =#
 
-println(CUDA.versioninfo())
+#println(CUDA.versioninfo())
 println([CUDA.capability(dev) for dev in CUDA.devices()])
 
 # Cleanup
