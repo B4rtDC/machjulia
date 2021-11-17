@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1               # total number of tasks across all nodes
 #SBATCH --cpus-per-task=1        # cpu-cores per task (>1 if multi-threaded tasks)
-#SBATCH --partition=80CORE          # use GPU partition to use
+#SBATCH --partition=GPU          # use GPU partition or CORE80 or ...
 #SBATCH --mem=16g 
 
 # Config 
