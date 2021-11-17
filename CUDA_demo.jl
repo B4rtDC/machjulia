@@ -9,18 +9,21 @@ When trying to do work on only one GPU, the example below appears to work
 using Distributed, CUDA
 using Random
 
-function foo(n::Int=100)
-    a = CuArray{Float32}(undef, n)
-    rand!(a)
-    return
-end
+
 
 @sync begin
     @async begin
         device!(0)
         # do work on GPU 0 here
         println("running on device $(device())")
-        res = @cuda foo()
+
+        function foo(n::Int=100)
+            a = CuArray{Float32}(undef, n)
+            rand!(a)
+            return a
+        end
+
+        res = foo()
         println(typeof(res)," ", res)
     end
     @async begin
