@@ -5,30 +5,50 @@ using ClusterManagers
 num_workers = parse(Int, ENV["SLURM_NTASKS"])
 num_threads = parse(Int, ENV["SLURM_CPUS_PER_TASK"])
 
-# SINGLE NODE DEMO 
-# ----------------
+# "FAST OPERATION DEMO"
+# ---------------------
+println("FAST OPERATION DEMO\n")
 
 # create workers
-#addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
-#addprocs(SlurmManager(num_workers))#, cpus_per_task="$(num_threads)")
-addprocs_slurm(num_workers)#, env=["JULIA_NUM_THREADS"=>"$(num_threads)"])
+addprocs_slurm(num_workers)
 
-# Some overview
+# Some overview (controller)
 println("Number of available processes: $(nprocs()) (= SLURM_NTASKS + 1)")
 println("Number of available workers: $(nworkers()) (= SLURM_NTASKS)")
 println("List of all process identifiers: $(procs()) (including pid1, i.e. the controller)")
 println("List of all worker process identifiers: $(workers()) (identifiers)")
 println("id of main controller: $(myid())")
 
-# Fast operations => distributed for
+# Fast operation => distributed for
 @sync @distributed for i in 1:10
-    println("I'm worker $(myid()), working on i=$(i)")
+    println("""Total number of nodes in the job's resource allocation: $(ENV["SLURM_JOB_NODES"])""")
+    println("""The relative node ID of the current node: $(ENV["SLURM_NODEID"])""")
+    println("""Total number of nodes in the job's resource allocation: $(ENV["SLURM_JOB_NODES"])""")
+    println("Worker $(myid()) is working on i=$(i)")
     Threads.@threads for j in 1:30
-        println("Worker $(myid()), working on task $(j) on thread $(Threads.threadid())")
-    end 
+        println("\tworking on subtask $(j) on thread $(Threads.threadid())")
+    end nodeid()
 end
 
-# kill workers ?
+# kill workers
+rmprocs(workers())
+
+
+
+
+# "SLOW OPERATION DEMO"
+# ---------------------
+println("SLOW OPERATION DEMO\n")
+
+# create workers
+addprocs_slurm(num_workers)
+
+# make data and packages known on each worker
+@everywhere begin
+    using SharedArrays # SharedArrays (needs to be on same host, see DistributedArrays.jl for arrays over multiple hosts
+end
+
+
 
 
 #=
