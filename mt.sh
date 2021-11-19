@@ -1,4 +1,4 @@
-#!/bin/bash #-l
+#!/bin/bash
 #
 #SBATCH --partition 80CORE 
 #SBATCH --nodes=1 # single node
