@@ -1,5 +1,5 @@
 using Distributed
-#using ClusterManagers
+using ClusterManagers
 
 # read settings
 num_workers = parse(Int, ENV["SLURM_NTASKS"])
