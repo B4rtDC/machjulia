@@ -29,18 +29,18 @@ println("id of main controller: $(myid())")
     end
 end
 
-# kill workers
+# kill workers (not necessary, but possible)
 rmprocs(workers())
 
 
 
 
-# "SLOW OPERATION DEMO"
+# "SLOW OPERATION DEMO" => to do
 # ---------------------
 println("SLOW OPERATION DEMO\n")
 
 # create workers
-addprocs_slurm(num_workers)
+#addprocs_slurm(num_workers)
 
 # make data and packages known on each worker
 @everywhere begin
