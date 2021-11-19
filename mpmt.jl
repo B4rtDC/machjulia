@@ -11,7 +11,7 @@ num_threads = parse(Int, ENV["SLURM_CPUS_PER_TASK"])
 # create workers
 #addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
 #addprocs(SlurmManager(num_workers))#, cpus_per_task="$(num_threads)")
-addprocs(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
+addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
 
 # Some overview
 println("Number of available processes: $(nprocs()) (= SLURM_NTASKS + 1)")
@@ -21,8 +21,11 @@ println("List of all worker process identifiers: $(workers()) (identifiers)")
 println("id of main controller: $(myid())")
 
 # Fast operations => distributed for
-@sync @distributed for i in 1:200
-    println("I'm worker $(myid()), working on i=$i")
+@sync @distributed for i in 1:10
+    println("I'm worker $(myid()), working on i=$(i)")
+    Threads.@threads for j in 1:30
+        println("Worker $(myid()), working on task $(j) on thread $(Threads.threadid())")
+    end 
 end
 
 # kill workers ?
