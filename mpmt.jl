@@ -11,7 +11,7 @@ num_threads = parse(Int, ENV["SLURM_CPUS_PER_TASK"])
 # create workers
 #addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
 #addprocs(SlurmManager(num_workers))#, cpus_per_task="$(num_threads)")
-addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
+addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>"$(num_threads)"])
 
 # Some overview
 println("Number of available processes: $(nprocs()) (= SLURM_NTASKS + 1)")
