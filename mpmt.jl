@@ -1,14 +1,35 @@
 using Distributed
-using ClusterManagers
+#using ClusterManagers
+
 # read settings
 num_workers = parse(Int, ENV["SLURM_NTASKS"])
 num_threads = parse(Int, ENV["SLURM_CPUS_PER_TASK"])
 
+# SINGLE NODE DEMO 
+# ----------------
 
 # create workers
 #addprocs_slurm(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
 #addprocs(SlurmManager(num_workers))#, cpus_per_task="$(num_threads)")
-addprocs_slurm(num_workers)
+addprocs(num_workers, env=["JULIA_NUM_THREADS"=>num_threads])
+
+# Some overview
+println("Number of available processes: $(nprocs()) (= SLURM_NTASKS + 1)")
+println("Number of available workers: $(nworkers()) (= SLURM_NTASKS)")
+println("List of all process identifiers: $(procs()) (including pid1, i.e. the controller)")
+println("List of all worker process identifiers: $(workers()) (identifiers)")
+println("id of main controller: $(myid())")
+
+# Fast operations => distributed for
+@sync @distributed for i in 1:200
+    println("I'm worker $(myid()), working on i=$i")
+end
+
+# kill workers ?
+
+
+#=
+procs()
 @everywhere begin
     function myfun(i)
         println("iteration $(i) on worker $(myid()) on host $(gethostname())")
@@ -53,3 +74,4 @@ pmap(wiener, collect(1:200))
 # remove workers after work
 println("done working!")
 rmprocs(workers())
+=#
