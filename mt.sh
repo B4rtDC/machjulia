@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-#SBATCH --partition 80CORE 
+#SBATCH --partition GPU 
 #SBATCH --nodes=1 # single node
 #SBATCH --ntasks=1 # single process (worker)
 #SBATCH --cpus-per-task=17 # 17 threads
