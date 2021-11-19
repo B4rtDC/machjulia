@@ -21,7 +21,7 @@ println("id of main controller: $(myid())")
 
 # Fast operation => distributed for
 @sync @distributed for i in 1:10
-    println("""Total number of nodes in the job's resource allocation: $(ENV["SLURM_JOB_NODES"])""")
+    #println("""Total number of nodes in the job's resource allocation: $(ENV["SLURM_JOB_NODES"])""") # not found
     println("""The relative node ID of the current node: $(ENV["SLURM_NODEID"])""")
     println("Worker $(myid()) is working on i=$(i)")
     Threads.@threads for j in 1:30
