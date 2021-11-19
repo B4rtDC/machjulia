@@ -23,11 +23,10 @@ println("id of main controller: $(myid())")
 @sync @distributed for i in 1:10
     println("""Total number of nodes in the job's resource allocation: $(ENV["SLURM_JOB_NODES"])""")
     println("""The relative node ID of the current node: $(ENV["SLURM_NODEID"])""")
-    println("""Total number of nodes in the job's resource allocation: $(ENV["SLURM_JOB_NODES"])""")
     println("Worker $(myid()) is working on i=$(i)")
     Threads.@threads for j in 1:30
         println("\tworking on subtask $(j) on thread $(Threads.threadid())")
-    end nodeid()
+    end
 end
 
 # kill workers
