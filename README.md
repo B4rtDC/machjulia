@@ -20,3 +20,15 @@
     - using the DGX station for GPU computing
 
         `CUDA.sh`
+
+    - using a Pluto notebook on the cluster (currently only multithreading, because each Pluto notebook is a worker as well)
+
+        `plutonotebook.sh`
+
+
+## Relevant documentation
+* [Parallel computing docs](https://docs.julialang.org/en/v1/manual/parallel-computing/)
+* [ClusterManagers.jl](https://github.com/JuliaParallel/ClusterManagers.jl)
+* [mach docs](http://mach.intra.rma.ac.be/docs/) (intranet)
+* [SLURM documentation](https://slurm.schedmd.com)
+* [Princeton research computing](https://researchcomputing.princeton.edu/support/knowledge-base/julia)
